@@ -30,7 +30,9 @@
         {
             this.OriginalImagePictureBox = new System.Windows.Forms.PictureBox();
             this.CoderLoadButton = new System.Windows.Forms.Button();
+            this.ErrorImagePictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.OriginalImagePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorImagePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // OriginalImagePictureBox
@@ -52,11 +54,21 @@
             this.CoderLoadButton.UseVisualStyleBackColor = true;
             this.CoderLoadButton.Click += new System.EventHandler(this.CoderLoadButton_Click);
             // 
+            // ErrorImagePictureBox
+            // 
+            this.ErrorImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ErrorImagePictureBox.Location = new System.Drawing.Point(287, 12);
+            this.ErrorImagePictureBox.Name = "ErrorImagePictureBox";
+            this.ErrorImagePictureBox.Size = new System.Drawing.Size(256, 256);
+            this.ErrorImagePictureBox.TabIndex = 2;
+            this.ErrorImagePictureBox.TabStop = false;
+            // 
             // PredictiveCodingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 577);
+            this.Controls.Add(this.ErrorImagePictureBox);
             this.Controls.Add(this.CoderLoadButton);
             this.Controls.Add(this.OriginalImagePictureBox);
             this.Name = "PredictiveCodingForm";
@@ -64,6 +76,7 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.OriginalImagePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ErrorImagePictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -72,6 +85,7 @@
 
         private System.Windows.Forms.PictureBox OriginalImagePictureBox;
         private System.Windows.Forms.Button CoderLoadButton;
+        private System.Windows.Forms.PictureBox ErrorImagePictureBox;
     }
 }
 

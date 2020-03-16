@@ -27,15 +27,13 @@ namespace predictive_coding
 
         private void CoderLoadButton_Click(object sender, EventArgs e)
         {
-            var fileContent = string.Empty;
             var filePath = string.Empty;
             Bitmap bitmapImage = null;
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.InitialDirectory = "c:\\School";
                 openFileDialog.Filter = "BMP FIles (*.bmp)|*.BMP";
-                openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -53,10 +51,11 @@ namespace predictive_coding
                     {
                         for (int j = 0; j < 256; j++)
                         {
-                            byte color = coder.OriginalImage[i, j];
-                            ((Bitmap)ErrorImagePictureBox.Image).SetPixel(255 - i, j, Color.FromArgb(color, color, color));
+                            byte color = coder.OriginalImage[i,j];
+                            ((Bitmap)ErrorImagePictureBox.Image).SetPixel(j, i, Color.FromArgb(color, color, color));
                         }
                     }
+                    
                     ErrorImagePictureBox.Refresh();
                 }
             }

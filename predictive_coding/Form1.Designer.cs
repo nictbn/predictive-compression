@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.OriginalImagePictureBox = new System.Windows.Forms.PictureBox();
+            this.originalImagePictureBox = new System.Windows.Forms.PictureBox();
             this.CoderLoadButton = new System.Windows.Forms.Button();
             this.ErrorImagePictureBox = new System.Windows.Forms.PictureBox();
             this.OriginalImageLabel = new System.Windows.Forms.Label();
@@ -47,7 +47,7 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.kSelectorNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.kValueLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.OriginalImagePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.originalImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ErrorImagePictureBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kSelectorNumericUpDown)).BeginInit();
@@ -55,12 +55,12 @@
             // 
             // OriginalImagePictureBox
             // 
-            this.OriginalImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.OriginalImagePictureBox.Location = new System.Drawing.Point(12, 23);
-            this.OriginalImagePictureBox.Name = "OriginalImagePictureBox";
-            this.OriginalImagePictureBox.Size = new System.Drawing.Size(256, 256);
-            this.OriginalImagePictureBox.TabIndex = 0;
-            this.OriginalImagePictureBox.TabStop = false;
+            this.originalImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.originalImagePictureBox.Location = new System.Drawing.Point(12, 23);
+            this.originalImagePictureBox.Name = "OriginalImagePictureBox";
+            this.originalImagePictureBox.Size = new System.Drawing.Size(256, 256);
+            this.originalImagePictureBox.TabIndex = 0;
+            this.originalImagePictureBox.TabStop = false;
             // 
             // CoderLoadButton
             // 
@@ -109,6 +109,7 @@
             this.EncodeButton.TabIndex = 5;
             this.EncodeButton.Text = "Encode";
             this.EncodeButton.UseVisualStyleBackColor = true;
+            this.EncodeButton.Click += new System.EventHandler(this.EncodeButton_Click);
             // 
             // CoderSaveButton
             // 
@@ -255,6 +256,7 @@
             0,
             0,
             0});
+            this.kSelectorNumericUpDown.ValueChanged += new System.EventHandler(this.kSelectorNumericUpDown_ValueChanged);
             // 
             // kValueLabel
             // 
@@ -280,12 +282,12 @@
             this.Controls.Add(this.OriginalImageLabel);
             this.Controls.Add(this.ErrorImagePictureBox);
             this.Controls.Add(this.CoderLoadButton);
-            this.Controls.Add(this.OriginalImagePictureBox);
+            this.Controls.Add(this.originalImagePictureBox);
             this.Name = "PredictiveCodingForm";
             this.Text = "Predictive Coding";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.OriginalImagePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.originalImagePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ErrorImagePictureBox)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -297,7 +299,7 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox OriginalImagePictureBox;
+        private System.Windows.Forms.PictureBox originalImagePictureBox;
         private System.Windows.Forms.Button CoderLoadButton;
         private System.Windows.Forms.PictureBox ErrorImagePictureBox;
         private System.Windows.Forms.Label OriginalImageLabel;

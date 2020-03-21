@@ -13,7 +13,6 @@ namespace predictive_coding
 {
     public partial class PredictiveCodingForm : Form
     {
-        int selectedPredictor;
         Coder coder;
         public PredictiveCodingForm()
         {
@@ -31,7 +30,6 @@ namespace predictive_coding
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            selectedPredictor = 0;
             coder = new Coder();
             coder.Init();
         }
@@ -39,7 +37,6 @@ namespace predictive_coding
         private void CoderLoadButton_Click(object sender, EventArgs e)
         {
             var filePath = string.Empty;
-            Bitmap bitmapImage = null;
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -49,25 +46,13 @@ namespace predictive_coding
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    //Get the path of specified file
                     filePath = openFileDialog.FileName;
-
                     coder.ParseImage(openFileDialog.FileName);
-
-                    bitmapImage = new Bitmap(filePath);
-                    OriginalImagePictureBox.Image = bitmapImage;
-
-                    ErrorImagePictureBox.Image = new Bitmap(256, 256);
-                    for (int i = 0; i < 256; i++)
+                    using (var fs = new System.IO.FileStream(filePath, System.IO.FileMode.Open))
                     {
-                        for (int j = 0; j < 256; j++)
-                        {
-                            byte color = coder.original[i, j];
-                            ((Bitmap)ErrorImagePictureBox.Image).SetPixel(j, i, Color.FromArgb(color, color, color));
-                        }
+                        var bmp = new Bitmap(fs);
+                        originalImagePictureBox.Image = (Bitmap)bmp.Clone();
                     }
-
-                    ErrorImagePictureBox.Refresh();
                 }
             }
         }
@@ -76,40 +61,50 @@ namespace predictive_coding
         {
             if (radioButton1.Checked)
             {
-                selectedPredictor = 0;
+                coder.predictor = 0;
             }
             else if (radioButton2.Checked)
             {
-                selectedPredictor = 1;
+                coder.predictor = 1;
             }
             else if (radioButton3.Checked)
             {
-                selectedPredictor = 2;
+                coder.predictor = 2;
             }
             else if (radioButton4.Checked)
             {
-                selectedPredictor = 3;
+                coder.predictor = 3;
             }
             else if (radioButton5.Checked)
             {
-                selectedPredictor = 4;
+                coder.predictor = 4;
             }
             else if (radioButton6.Checked)
             {
-                selectedPredictor = 5;
+                coder.predictor = 5;
             }
             else if (radioButton7.Checked)
             {
-                selectedPredictor = 6;
+                coder.predictor = 6;
             }
             else if (radioButton8.Checked)
             {
-                selectedPredictor = 7;
+                coder.predictor = 7;
             }
-            else (radioButton9.Checked)
+            else
             {
-                selectedPredictor = 8;
+                coder.predictor = 8;
             }
+        }
+
+        private void EncodeButton_Click(object sender, EventArgs e)
+        {
+            coder.Encode();
+        }
+
+        private void kSelectorNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            coder.k = Convert.ToInt32(kSelectorNumericUpDown.Value);
         }
     }
 }

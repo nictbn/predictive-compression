@@ -9,6 +9,8 @@ namespace predictive_coding
 {
     public class Coder
     {
+        public int k;
+        public int predictor;
         public byte[] header;
         public byte[,] original;
         public int[,] prediction;
@@ -51,6 +53,11 @@ namespace predictive_coding
                     }
                 }
             }
+        }
+
+        public void Encode()
+        {
+
         }
     }
 }

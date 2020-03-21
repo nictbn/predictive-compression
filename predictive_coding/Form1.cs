@@ -48,10 +48,9 @@ namespace predictive_coding
                 {
                     filePath = openFileDialog.FileName;
                     coder.ParseImage(openFileDialog.FileName);
-                    using (var fs = new System.IO.FileStream(filePath, System.IO.FileMode.Open))
+                    using (var bmpTemp = new Bitmap(filePath))
                     {
-                        var bmp = new Bitmap(fs);
-                        originalImagePictureBox.Image = (Bitmap)bmp.Clone();
+                        originalImagePictureBox.Image = new Bitmap(bmpTemp);
                     }
                 }
             }

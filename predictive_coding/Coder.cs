@@ -39,6 +39,7 @@ namespace predictive_coding
 
         public void Init()
         {
+            k = 2;
             header = new byte[1078];
             original = new byte[256, 256];
             prediction = new byte[256, 256];

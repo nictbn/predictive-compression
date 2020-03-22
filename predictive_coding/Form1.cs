@@ -13,19 +13,25 @@ namespace predictive_coding
 {
     public partial class PredictiveCodingForm : Form
     {
+        const int PREDICTION_ERROR_IMAGE = 0;
+        const int QUANTIZED_PREDICITON_ERROR_IMAGE = 1;
+        int selectedErrorImage = PREDICTION_ERROR_IMAGE;
         Coder coder;
         public PredictiveCodingForm()
         {
             InitializeComponent();
-            radioButton1.CheckedChanged += new EventHandler(radioButton_CheckedChanged);
-            radioButton2.CheckedChanged += new EventHandler(radioButton_CheckedChanged);
-            radioButton3.CheckedChanged += new EventHandler(radioButton_CheckedChanged);
-            radioButton4.CheckedChanged += new EventHandler(radioButton_CheckedChanged);
-            radioButton5.CheckedChanged += new EventHandler(radioButton_CheckedChanged);
-            radioButton6.CheckedChanged += new EventHandler(radioButton_CheckedChanged);
-            radioButton7.CheckedChanged += new EventHandler(radioButton_CheckedChanged);
-            radioButton8.CheckedChanged += new EventHandler(radioButton_CheckedChanged);
-            radioButton9.CheckedChanged += new EventHandler(radioButton_CheckedChanged);
+            radioButton1.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
+            radioButton2.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
+            radioButton3.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
+            radioButton4.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
+            radioButton5.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
+            radioButton6.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
+            radioButton7.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
+            radioButton8.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
+            radioButton9.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
+
+            PredictionErrorRadioButton.CheckedChanged += new EventHandler(selectedErrorImageRadioButton_CheckedChanged);
+            QuantizedPredictionErrorRadioButton.CheckedChanged += new EventHandler(selectedErrorImageRadioButton_CheckedChanged);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -56,7 +62,19 @@ namespace predictive_coding
             }
         }
 
-        private void radioButton_CheckedChanged(object sender, EventArgs e)
+        private void selectedErrorImageRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (PredictionErrorRadioButton.Checked)
+            {
+                selectedErrorImage = PREDICTION_ERROR_IMAGE;
+            }
+            if (QuantizedPredictionErrorRadioButton.Checked)
+            {
+                selectedErrorImage = QUANTIZED_PREDICITON_ERROR_IMAGE;
+            }
+        }
+
+        private void predictorRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButton1.Checked)
             {
@@ -104,6 +122,63 @@ namespace predictive_coding
         private void kSelectorNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             coder.k = Convert.ToInt32(kSelectorNumericUpDown.Value);
+        }
+
+        private void ErrorImageRefreshButton_Click(object sender, EventArgs e)
+        {
+            double contrast;
+            if(!Double.TryParse(contrastTextBox.Text, out contrast))
+            {
+                string message = "The contrast value should be numeric!";
+                string title = "Error";
+                MessageBox.Show(message, title);
+                return;
+            }
+            if (contrast < 0)
+            {
+                string message = "The contrast value should be greater or equal to 0!";
+                string title = "Error";
+                MessageBox.Show(message, title);
+                return;
+            }
+            Bitmap bitmap = new Bitmap(256, 256);
+            for(int i = 0; i < 256; i++)
+            {
+                for (int j = 0; j < 256; j++)
+                {
+                    int value;
+                    if (selectedErrorImage == PREDICTION_ERROR_IMAGE)
+                    {
+                        value =(int)(contrast * coder.predictionError[i, j] + 128);
+                    }
+                    else
+                    {
+                        value = (int)(contrast * coder.quantizedPredictionError[i, j] + 128);
+                    }
+                    byte normalizedValue = normalize(value);
+                    bitmap.SetPixel(j, i, Color.FromArgb(normalizedValue, normalizedValue, normalizedValue));
+                }
+            }
+            ErrorImagePictureBox.Image = bitmap;
+        }
+
+        private byte normalize(int value)
+        {
+            if (value > 255)
+            {
+                value = 255;
+            }
+            if (value < 0)
+            {
+                value = 0;
+            }
+            return (byte)value;
+        }
+
+        private void ComputeErrorButton_Click(object sender, EventArgs e)
+        {
+            MinErrorLabel.Text = "Min Error: " + coder.GetMinimumError();
+            MaxErrorLabel.Text = "Max Error: " + coder.GetMaximumError();
         }
     }
 }

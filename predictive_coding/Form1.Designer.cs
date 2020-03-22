@@ -47,17 +47,27 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.kSelectorNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.kValueLabel = new System.Windows.Forms.Label();
+            this.ErrorImageRefreshButton = new System.Windows.Forms.Button();
+            this.ComputeErrorButton = new System.Windows.Forms.Button();
+            this.MinErrorLabel = new System.Windows.Forms.Label();
+            this.MaxErrorLabel = new System.Windows.Forms.Label();
+            this.ErrorImageGroupBox = new System.Windows.Forms.GroupBox();
+            this.PredictionErrorRadioButton = new System.Windows.Forms.RadioButton();
+            this.QuantizedPredictionErrorRadioButton = new System.Windows.Forms.RadioButton();
+            this.contrastTextBox = new System.Windows.Forms.TextBox();
+            this.contrastLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.originalImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ErrorImagePictureBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kSelectorNumericUpDown)).BeginInit();
+            this.ErrorImageGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
-            // OriginalImagePictureBox
+            // originalImagePictureBox
             // 
             this.originalImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.originalImagePictureBox.Location = new System.Drawing.Point(12, 23);
-            this.originalImagePictureBox.Name = "OriginalImagePictureBox";
+            this.originalImagePictureBox.Name = "originalImagePictureBox";
             this.originalImagePictureBox.Size = new System.Drawing.Size(256, 256);
             this.originalImagePictureBox.TabIndex = 0;
             this.originalImagePictureBox.TabStop = false;
@@ -268,11 +278,108 @@
             this.kValueLabel.TabIndex = 9;
             this.kValueLabel.Text = "K Value";
             // 
+            // ErrorImageRefreshButton
+            // 
+            this.ErrorImageRefreshButton.Location = new System.Drawing.Point(468, 325);
+            this.ErrorImageRefreshButton.Name = "ErrorImageRefreshButton";
+            this.ErrorImageRefreshButton.Size = new System.Drawing.Size(75, 23);
+            this.ErrorImageRefreshButton.TabIndex = 10;
+            this.ErrorImageRefreshButton.Text = "Refresh";
+            this.ErrorImageRefreshButton.UseVisualStyleBackColor = true;
+            this.ErrorImageRefreshButton.Click += new System.EventHandler(this.ErrorImageRefreshButton_Click);
+            // 
+            // ComputeErrorButton
+            // 
+            this.ComputeErrorButton.Location = new System.Drawing.Point(287, 528);
+            this.ComputeErrorButton.Name = "ComputeErrorButton";
+            this.ComputeErrorButton.Size = new System.Drawing.Size(86, 23);
+            this.ComputeErrorButton.TabIndex = 11;
+            this.ComputeErrorButton.Text = "Compute Error";
+            this.ComputeErrorButton.UseVisualStyleBackColor = true;
+            this.ComputeErrorButton.Click += new System.EventHandler(this.ComputeErrorButton_Click);
+            // 
+            // MinErrorLabel
+            // 
+            this.MinErrorLabel.AutoSize = true;
+            this.MinErrorLabel.Location = new System.Drawing.Point(284, 563);
+            this.MinErrorLabel.Name = "MinErrorLabel";
+            this.MinErrorLabel.Size = new System.Drawing.Size(52, 13);
+            this.MinErrorLabel.TabIndex = 12;
+            this.MinErrorLabel.Text = "Min Error:";
+            // 
+            // MaxErrorLabel
+            // 
+            this.MaxErrorLabel.AutoSize = true;
+            this.MaxErrorLabel.Location = new System.Drawing.Point(284, 590);
+            this.MaxErrorLabel.Name = "MaxErrorLabel";
+            this.MaxErrorLabel.Size = new System.Drawing.Size(55, 13);
+            this.MaxErrorLabel.TabIndex = 13;
+            this.MaxErrorLabel.Text = "Max Error:";
+            // 
+            // ErrorImageGroupBox
+            // 
+            this.ErrorImageGroupBox.Controls.Add(this.QuantizedPredictionErrorRadioButton);
+            this.ErrorImageGroupBox.Controls.Add(this.PredictionErrorRadioButton);
+            this.ErrorImageGroupBox.Location = new System.Drawing.Point(287, 285);
+            this.ErrorImageGroupBox.Name = "ErrorImageGroupBox";
+            this.ErrorImageGroupBox.Size = new System.Drawing.Size(175, 66);
+            this.ErrorImageGroupBox.TabIndex = 14;
+            this.ErrorImageGroupBox.TabStop = false;
+            this.ErrorImageGroupBox.Text = "Error Image Selector";
+            // 
+            // PredictionErrorRadioButton
+            // 
+            this.PredictionErrorRadioButton.AutoSize = true;
+            this.PredictionErrorRadioButton.Checked = true;
+            this.PredictionErrorRadioButton.Location = new System.Drawing.Point(6, 20);
+            this.PredictionErrorRadioButton.Name = "PredictionErrorRadioButton";
+            this.PredictionErrorRadioButton.Size = new System.Drawing.Size(97, 17);
+            this.PredictionErrorRadioButton.TabIndex = 15;
+            this.PredictionErrorRadioButton.TabStop = true;
+            this.PredictionErrorRadioButton.Text = "Prediction Error";
+            this.PredictionErrorRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // QuantizedPredictionErrorRadioButton
+            // 
+            this.QuantizedPredictionErrorRadioButton.AutoSize = true;
+            this.QuantizedPredictionErrorRadioButton.Location = new System.Drawing.Point(6, 43);
+            this.QuantizedPredictionErrorRadioButton.Name = "QuantizedPredictionErrorRadioButton";
+            this.QuantizedPredictionErrorRadioButton.Size = new System.Drawing.Size(148, 17);
+            this.QuantizedPredictionErrorRadioButton.TabIndex = 16;
+            this.QuantizedPredictionErrorRadioButton.Text = "Quantized Prediction Error";
+            this.QuantizedPredictionErrorRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // contrastTextBox
+            // 
+            this.contrastTextBox.Location = new System.Drawing.Point(468, 298);
+            this.contrastTextBox.Name = "contrastTextBox";
+            this.contrastTextBox.Size = new System.Drawing.Size(75, 20);
+            this.contrastTextBox.TabIndex = 15;
+            this.contrastTextBox.Text = "1";
+            this.contrastTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // contrastLabel
+            // 
+            this.contrastLabel.AutoSize = true;
+            this.contrastLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.contrastLabel.Location = new System.Drawing.Point(468, 282);
+            this.contrastLabel.Name = "contrastLabel";
+            this.contrastLabel.Size = new System.Drawing.Size(58, 13);
+            this.contrastLabel.TabIndex = 16;
+            this.contrastLabel.Text = "Contrast:";
+            // 
             // PredictiveCodingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 577);
+            this.ClientSize = new System.Drawing.Size(800, 674);
+            this.Controls.Add(this.contrastLabel);
+            this.Controls.Add(this.contrastTextBox);
+            this.Controls.Add(this.ErrorImageGroupBox);
+            this.Controls.Add(this.MaxErrorLabel);
+            this.Controls.Add(this.MinErrorLabel);
+            this.Controls.Add(this.ComputeErrorButton);
+            this.Controls.Add(this.ErrorImageRefreshButton);
             this.Controls.Add(this.kValueLabel);
             this.Controls.Add(this.kSelectorNumericUpDown);
             this.Controls.Add(this.groupBox1);
@@ -292,6 +399,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kSelectorNumericUpDown)).EndInit();
+            this.ErrorImageGroupBox.ResumeLayout(false);
+            this.ErrorImageGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -318,6 +427,15 @@
         private System.Windows.Forms.RadioButton radioButton9;
         private System.Windows.Forms.NumericUpDown kSelectorNumericUpDown;
         private System.Windows.Forms.Label kValueLabel;
+        private System.Windows.Forms.Button ErrorImageRefreshButton;
+        private System.Windows.Forms.Button ComputeErrorButton;
+        private System.Windows.Forms.Label MinErrorLabel;
+        private System.Windows.Forms.Label MaxErrorLabel;
+        private System.Windows.Forms.GroupBox ErrorImageGroupBox;
+        private System.Windows.Forms.RadioButton QuantizedPredictionErrorRadioButton;
+        private System.Windows.Forms.RadioButton PredictionErrorRadioButton;
+        private System.Windows.Forms.TextBox contrastTextBox;
+        private System.Windows.Forms.Label contrastLabel;
     }
 }
 

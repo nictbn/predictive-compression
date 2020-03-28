@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BitReaderWriter
 {
-    class BitReader
+    public class BitReader
     {
         byte readBuffer;
         long readBitsCounter;

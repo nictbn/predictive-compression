@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BitReaderWriter;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace predictive_coding
         public int[,] dequantizedPredictionError;
         public byte[,] decoded;
         public int[,] error;
-
+        public string saveMode;
         const int HEADER_SIZE = 1078;
         const int WIDTH = 256;
         const int HEIGHT = 256;
@@ -48,6 +49,7 @@ namespace predictive_coding
             dequantizedPredictionError = new int[256, 256];
             decoded = new byte[256, 256];
             error = new int[256, 256];
+            saveMode = "F";
         }
 
         public void ParseImage(string path)
@@ -247,6 +249,34 @@ namespace predictive_coding
                 }
             }
             return min;
+        }
+
+        public void Save(string imagePath)
+        {
+            if (imagePath != null)
+            {
+                string savedFilePath = imagePath;
+                savedFilePath += ".k" + k + "p" + predictor + saveMode + ".nlp";
+                BitWriter writer = new BitWriter(savedFilePath);
+                writer.writeNBits(k, 4);
+                writer.writeNBits(predictor, 4);
+                byte[] asciiBytes = Encoding.ASCII.GetBytes(saveMode);
+                writer.writeNBits(asciiBytes[0], 8);
+                for (int i = 0; i < HEADER_SIZE; i++)
+                {
+                    writer.writeNBits(header[i], 8);
+                }
+
+                for(int i = 0; i < HEIGHT; i++)
+                {
+                    for (int j = 0; j < WIDTH; j++)
+                    {
+                        writer.writeNBits(quantizedPredictionError[i, j], 9);
+                    }
+                }
+                writer.writeNBits(0, 7);
+                writer.closeFile();
+            }
         }
 
         public int GetMaximumError()

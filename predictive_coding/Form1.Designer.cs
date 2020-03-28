@@ -52,15 +52,20 @@
             this.MinErrorLabel = new System.Windows.Forms.Label();
             this.MaxErrorLabel = new System.Windows.Forms.Label();
             this.ErrorImageGroupBox = new System.Windows.Forms.GroupBox();
-            this.PredictionErrorRadioButton = new System.Windows.Forms.RadioButton();
             this.QuantizedPredictionErrorRadioButton = new System.Windows.Forms.RadioButton();
+            this.PredictionErrorRadioButton = new System.Windows.Forms.RadioButton();
             this.contrastTextBox = new System.Windows.Forms.TextBox();
             this.contrastLabel = new System.Windows.Forms.Label();
+            this.saveModeGroupBox = new System.Windows.Forms.GroupBox();
+            this.radioButton12 = new System.Windows.Forms.RadioButton();
+            this.radioButton11 = new System.Windows.Forms.RadioButton();
+            this.radioButton10 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.originalImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ErrorImagePictureBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kSelectorNumericUpDown)).BeginInit();
             this.ErrorImageGroupBox.SuspendLayout();
+            this.saveModeGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // originalImagePictureBox
@@ -129,6 +134,7 @@
             this.CoderSaveButton.TabIndex = 6;
             this.CoderSaveButton.Text = "Save";
             this.CoderSaveButton.UseVisualStyleBackColor = true;
+            this.CoderSaveButton.Click += new System.EventHandler(this.CoderSaveButton_Click);
             // 
             // groupBox1
             // 
@@ -266,7 +272,7 @@
             0,
             0,
             0});
-            this.kSelectorNumericUpDown.ValueChanged += new System.EventHandler(this.kSelectorNumericUpDown_ValueChanged);
+            this.kSelectorNumericUpDown.ValueChanged += new System.EventHandler(this.KSelectorNumericUpDown_ValueChanged);
             // 
             // kValueLabel
             // 
@@ -327,6 +333,16 @@
             this.ErrorImageGroupBox.TabStop = false;
             this.ErrorImageGroupBox.Text = "Error Image Selector";
             // 
+            // QuantizedPredictionErrorRadioButton
+            // 
+            this.QuantizedPredictionErrorRadioButton.AutoSize = true;
+            this.QuantizedPredictionErrorRadioButton.Location = new System.Drawing.Point(6, 43);
+            this.QuantizedPredictionErrorRadioButton.Name = "QuantizedPredictionErrorRadioButton";
+            this.QuantizedPredictionErrorRadioButton.Size = new System.Drawing.Size(148, 17);
+            this.QuantizedPredictionErrorRadioButton.TabIndex = 16;
+            this.QuantizedPredictionErrorRadioButton.Text = "Quantized Prediction Error";
+            this.QuantizedPredictionErrorRadioButton.UseVisualStyleBackColor = true;
+            // 
             // PredictionErrorRadioButton
             // 
             this.PredictionErrorRadioButton.AutoSize = true;
@@ -338,16 +354,6 @@
             this.PredictionErrorRadioButton.TabStop = true;
             this.PredictionErrorRadioButton.Text = "Prediction Error";
             this.PredictionErrorRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // QuantizedPredictionErrorRadioButton
-            // 
-            this.QuantizedPredictionErrorRadioButton.AutoSize = true;
-            this.QuantizedPredictionErrorRadioButton.Location = new System.Drawing.Point(6, 43);
-            this.QuantizedPredictionErrorRadioButton.Name = "QuantizedPredictionErrorRadioButton";
-            this.QuantizedPredictionErrorRadioButton.Size = new System.Drawing.Size(148, 17);
-            this.QuantizedPredictionErrorRadioButton.TabIndex = 16;
-            this.QuantizedPredictionErrorRadioButton.Text = "Quantized Prediction Error";
-            this.QuantizedPredictionErrorRadioButton.UseVisualStyleBackColor = true;
             // 
             // contrastTextBox
             // 
@@ -368,11 +374,56 @@
             this.contrastLabel.TabIndex = 16;
             this.contrastLabel.Text = "Contrast:";
             // 
+            // saveModeGroupBox
+            // 
+            this.saveModeGroupBox.Controls.Add(this.radioButton12);
+            this.saveModeGroupBox.Controls.Add(this.radioButton11);
+            this.saveModeGroupBox.Controls.Add(this.radioButton10);
+            this.saveModeGroupBox.Location = new System.Drawing.Point(11, 528);
+            this.saveModeGroupBox.Name = "saveModeGroupBox";
+            this.saveModeGroupBox.Size = new System.Drawing.Size(200, 100);
+            this.saveModeGroupBox.TabIndex = 17;
+            this.saveModeGroupBox.TabStop = false;
+            this.saveModeGroupBox.Text = "Save Mode";
+            // 
+            // radioButton12
+            // 
+            this.radioButton12.AutoSize = true;
+            this.radioButton12.Location = new System.Drawing.Point(6, 65);
+            this.radioButton12.Name = "radioButton12";
+            this.radioButton12.Size = new System.Drawing.Size(71, 17);
+            this.radioButton12.TabIndex = 20;
+            this.radioButton12.Text = "Arithmetic";
+            this.radioButton12.UseVisualStyleBackColor = true;
+            // 
+            // radioButton11
+            // 
+            this.radioButton11.AutoSize = true;
+            this.radioButton11.Location = new System.Drawing.Point(6, 42);
+            this.radioButton11.Name = "radioButton11";
+            this.radioButton11.Size = new System.Drawing.Size(52, 17);
+            this.radioButton11.TabIndex = 19;
+            this.radioButton11.Text = "Table";
+            this.radioButton11.UseVisualStyleBackColor = true;
+            // 
+            // radioButton10
+            // 
+            this.radioButton10.AutoSize = true;
+            this.radioButton10.Checked = true;
+            this.radioButton10.Location = new System.Drawing.Point(6, 19);
+            this.radioButton10.Name = "radioButton10";
+            this.radioButton10.Size = new System.Drawing.Size(84, 17);
+            this.radioButton10.TabIndex = 18;
+            this.radioButton10.TabStop = true;
+            this.radioButton10.Text = "Fixed (9 bits)";
+            this.radioButton10.UseVisualStyleBackColor = true;
+            // 
             // PredictiveCodingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 674);
+            this.Controls.Add(this.saveModeGroupBox);
             this.Controls.Add(this.contrastLabel);
             this.Controls.Add(this.contrastTextBox);
             this.Controls.Add(this.ErrorImageGroupBox);
@@ -401,6 +452,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.kSelectorNumericUpDown)).EndInit();
             this.ErrorImageGroupBox.ResumeLayout(false);
             this.ErrorImageGroupBox.PerformLayout();
+            this.saveModeGroupBox.ResumeLayout(false);
+            this.saveModeGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -436,6 +489,10 @@
         private System.Windows.Forms.RadioButton PredictionErrorRadioButton;
         private System.Windows.Forms.TextBox contrastTextBox;
         private System.Windows.Forms.Label contrastLabel;
+        private System.Windows.Forms.GroupBox saveModeGroupBox;
+        private System.Windows.Forms.RadioButton radioButton12;
+        private System.Windows.Forms.RadioButton radioButton11;
+        private System.Windows.Forms.RadioButton radioButton10;
     }
 }
 

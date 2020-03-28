@@ -13,6 +13,7 @@ namespace predictive_coding
 {
     public partial class PredictiveCodingForm : Form
     {
+        string imagePath = null;
         const int PREDICTION_ERROR_IMAGE = 0;
         const int QUANTIZED_PREDICITON_ERROR_IMAGE = 1;
         int selectedErrorImage = PREDICTION_ERROR_IMAGE;
@@ -20,18 +21,18 @@ namespace predictive_coding
         public PredictiveCodingForm()
         {
             InitializeComponent();
-            radioButton1.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
-            radioButton2.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
-            radioButton3.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
-            radioButton4.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
-            radioButton5.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
-            radioButton6.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
-            radioButton7.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
-            radioButton8.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
-            radioButton9.CheckedChanged += new EventHandler(predictorRadioButton_CheckedChanged);
+            radioButton1.CheckedChanged += new EventHandler(PredictorRadioButton_CheckedChanged);
+            radioButton2.CheckedChanged += new EventHandler(PredictorRadioButton_CheckedChanged);
+            radioButton3.CheckedChanged += new EventHandler(PredictorRadioButton_CheckedChanged);
+            radioButton4.CheckedChanged += new EventHandler(PredictorRadioButton_CheckedChanged);
+            radioButton5.CheckedChanged += new EventHandler(PredictorRadioButton_CheckedChanged);
+            radioButton6.CheckedChanged += new EventHandler(PredictorRadioButton_CheckedChanged);
+            radioButton7.CheckedChanged += new EventHandler(PredictorRadioButton_CheckedChanged);
+            radioButton8.CheckedChanged += new EventHandler(PredictorRadioButton_CheckedChanged);
+            radioButton9.CheckedChanged += new EventHandler(PredictorRadioButton_CheckedChanged);
 
-            PredictionErrorRadioButton.CheckedChanged += new EventHandler(selectedErrorImageRadioButton_CheckedChanged);
-            QuantizedPredictionErrorRadioButton.CheckedChanged += new EventHandler(selectedErrorImageRadioButton_CheckedChanged);
+            PredictionErrorRadioButton.CheckedChanged += new EventHandler(SelectedErrorImageRadioButton_CheckedChanged);
+            QuantizedPredictionErrorRadioButton.CheckedChanged += new EventHandler(SelectedErrorImageRadioButton_CheckedChanged);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -42,8 +43,6 @@ namespace predictive_coding
 
         private void CoderLoadButton_Click(object sender, EventArgs e)
         {
-            var filePath = string.Empty;
-
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = "c:\\School";
@@ -52,9 +51,9 @@ namespace predictive_coding
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    filePath = openFileDialog.FileName;
+                    imagePath = openFileDialog.FileName;
                     coder.ParseImage(openFileDialog.FileName);
-                    using (var bmpTemp = new Bitmap(filePath))
+                    using (var bmpTemp = new Bitmap(imagePath))
                     {
                         originalImagePictureBox.Image = new Bitmap(bmpTemp);
                     }
@@ -62,7 +61,7 @@ namespace predictive_coding
             }
         }
 
-        private void selectedErrorImageRadioButton_CheckedChanged(object sender, EventArgs e)
+        private void SelectedErrorImageRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (PredictionErrorRadioButton.Checked)
             {
@@ -74,7 +73,7 @@ namespace predictive_coding
             }
         }
 
-        private void predictorRadioButton_CheckedChanged(object sender, EventArgs e)
+        private void PredictorRadioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButton1.Checked)
             {
@@ -114,12 +113,28 @@ namespace predictive_coding
             }
         }
 
+        private void SaveModeRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton10.Checked)
+            {
+                coder.saveMode = "F";
+            }
+            else if (radioButton11.Checked)
+            {
+                coder.saveMode = "F";   // THIS MUST BE CHANGED
+            }
+            else if (radioButton12.Checked)
+            {
+                coder.saveMode = "F"; // THIS MUST BE CHANGED
+            }
+        }
+
         private void EncodeButton_Click(object sender, EventArgs e)
         {
             coder.Encode();
         }
 
-        private void kSelectorNumericUpDown_ValueChanged(object sender, EventArgs e)
+        private void KSelectorNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             coder.k = Convert.ToInt32(kSelectorNumericUpDown.Value);
         }
@@ -155,14 +170,14 @@ namespace predictive_coding
                     {
                         value = (int)(contrast * coder.quantizedPredictionError[i, j] + 128);
                     }
-                    byte normalizedValue = normalize(value);
+                    byte normalizedValue = Normalize(value);
                     bitmap.SetPixel(j, i, Color.FromArgb(normalizedValue, normalizedValue, normalizedValue));
                 }
             }
             ErrorImagePictureBox.Image = bitmap;
         }
 
-        private byte normalize(int value)
+        private byte Normalize(int value)
         {
             if (value > 255)
             {
@@ -179,6 +194,11 @@ namespace predictive_coding
         {
             MinErrorLabel.Text = "Min Error: " + coder.GetMinimumError();
             MaxErrorLabel.Text = "Max Error: " + coder.GetMaximumError();
+        }
+
+        private void CoderSaveButton_Click(object sender, EventArgs e)
+        {
+            coder.Save(imagePath);
         }
     }
 }

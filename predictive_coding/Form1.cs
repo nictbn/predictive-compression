@@ -20,6 +20,10 @@ namespace predictive_coding
         const int PREDICTION_ERROR = 1;
         const int QUANTIZED_PREDICITON_ERROR = 2;
         const int DECODED = 3;
+
+        const int USED_CODER = 0;
+        const int USED_DECODER = 1;
+        int usedComponent = USED_CODER;
         int selectedErrorImage = PREDICTION_ERROR_IMAGE;
         int selectedHistogram = ORIGINAL;
         Coder coder;
@@ -52,10 +56,12 @@ namespace predictive_coding
             coder.Init();
             decoder = new Decoder();
             decoder.Init();
+            SetUsedCompnent(USED_CODER);
         }
 
         private void CoderLoadButton_Click(object sender, EventArgs e)
         {
+            SetUsedCompnent(USED_CODER);
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = "c:\\School";
@@ -71,6 +77,28 @@ namespace predictive_coding
                         originalImagePictureBox.Image = new Bitmap(bmpTemp);
                     }
                 }
+            }
+        }
+
+        private void SetUsedCompnent(int component)
+        {
+            usedComponent = component;
+            UpdateLabels();
+        }
+
+        private void UpdateLabels()
+        {
+            if(usedComponent == USED_CODER)
+            {
+                radioButton14.Text = "Coder Prediction Error";
+                radioButton15.Text = "Coder Dequantized Prediction Error";
+                radioButton16.Text = "Coder Decoded Image";
+            }
+            if(usedComponent == USED_DECODER)
+            {
+                radioButton14.Text = "Decoder Prediction Error";
+                radioButton15.Text = "Decoder Dequantized Prediction Error";
+                radioButton16.Text = "Decoder Decoded Image";
             }
         }
 
@@ -164,6 +192,7 @@ namespace predictive_coding
 
         private void EncodeButton_Click(object sender, EventArgs e)
         {
+            SetUsedCompnent(USED_CODER);
             coder.Encode();
         }
 
@@ -231,6 +260,7 @@ namespace predictive_coding
 
         private void CoderSaveButton_Click(object sender, EventArgs e)
         {
+            SetUsedCompnent(USED_CODER);
             coder.Save(imagePath);
         }
 
@@ -260,17 +290,38 @@ namespace predictive_coding
                 histogram = GetHistogram(original);
             }
             if (selectedHistogram == PREDICTION_ERROR)
-            {
-                histogram = GetHistogram(coder.predictionError);
+            {   if (usedComponent == USED_CODER)
+                {
+                    histogram = GetHistogram(coder.dequantizedPredictionError);
+                }
+                else
+                {
+                    histogram = GetHistogram(decoder.dequantizedPredictionError);
+                }
             }
             if (selectedHistogram == QUANTIZED_PREDICITON_ERROR)
             {
-                histogram = GetHistogram(coder.quantizedPredictionError);
+                if (usedComponent == USED_CODER)
+                {
+                    histogram = GetHistogram(coder.quantizedPredictionError);
+                } 
+                else
+                {
+                    histogram = GetHistogram(decoder.quantizedPredictionError);
+                }
             }
             if (selectedHistogram == DECODED)
             {
-                int[,] decoded = TransformByteMatrixToIntMatrix(coder.decoded);
-                histogram = GetHistogram(decoded);
+                if (usedComponent == USED_CODER)
+                {
+                    int[,] decoded = TransformByteMatrixToIntMatrix(coder.decoded);
+                    histogram = GetHistogram(decoded);
+                }
+                else
+                {
+                    int[,] decoded = TransformByteMatrixToIntMatrix(decoder.decoded);
+                    histogram = GetHistogram(decoded);
+                }
             }
             DrawHistogram(histogram, bitmap, scale);
             histogramPictureBox.Image = bitmap;
@@ -324,6 +375,7 @@ namespace predictive_coding
 
         private void loadDecoded_Click(object sender, EventArgs e)
         {
+            SetUsedCompnent(USED_DECODER);
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = "c:\\School";
@@ -339,19 +391,8 @@ namespace predictive_coding
 
         private void decodeButton_Click(object sender, EventArgs e)
         {
+            SetUsedCompnent(USED_DECODER);
             decoder.Decode();
-
-            for(int i = 0; i < 256; i++)
-            {
-                for (int j = 0; j < 256; j++)
-                {
-                    if (coder.decoded[i, j] != decoder.decoded[i, j])
-                    {
-                        return;
-                    }
-                }
-            }
-
             Bitmap bitmap = new Bitmap(256, 256);
             for (int i = 0; i < 256; i++)
             {
@@ -366,6 +407,7 @@ namespace predictive_coding
 
         private void decoderSaveButton_Click(object sender, EventArgs e)
         {
+            SetUsedCompnent(USED_DECODER);
             decoder.Save();
         }
     }

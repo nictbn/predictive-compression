@@ -25,7 +25,7 @@ namespace predictive_coding
 
         public string codedImagePath;
         public int[,] quantizedPredictionError;
-        int[,] dequantizedPredictionError;
+        public int[,] dequantizedPredictionError;
         public byte[,] decoded;
         byte[] header;
         string saveMode;

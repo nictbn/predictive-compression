@@ -522,9 +522,9 @@
             this.groupBoxHistogramSourceImage.Controls.Add(this.radioButton15);
             this.groupBoxHistogramSourceImage.Controls.Add(this.radioButton14);
             this.groupBoxHistogramSourceImage.Controls.Add(this.radioButton13);
-            this.groupBoxHistogramSourceImage.Location = new System.Drawing.Point(400, 397);
+            this.groupBoxHistogramSourceImage.Location = new System.Drawing.Point(369, 397);
             this.groupBoxHistogramSourceImage.Name = "groupBoxHistogramSourceImage";
-            this.groupBoxHistogramSourceImage.Size = new System.Drawing.Size(200, 120);
+            this.groupBoxHistogramSourceImage.Size = new System.Drawing.Size(231, 120);
             this.groupBoxHistogramSourceImage.TabIndex = 26;
             this.groupBoxHistogramSourceImage.TabStop = false;
             this.groupBoxHistogramSourceImage.Text = "Source Image for Histogram";

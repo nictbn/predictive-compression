@@ -60,12 +60,30 @@
             this.radioButton12 = new System.Windows.Forms.RadioButton();
             this.radioButton11 = new System.Windows.Forms.RadioButton();
             this.radioButton10 = new System.Windows.Forms.RadioButton();
+            this.histogramPictureBox = new System.Windows.Forms.PictureBox();
+            this.scaleTextBox = new System.Windows.Forms.TextBox();
+            this.histogramRefreshButton = new System.Windows.Forms.Button();
+            this.scaleLabel = new System.Windows.Forms.Label();
+            this.labelMinus255 = new System.Windows.Forms.Label();
+            this.label0 = new System.Windows.Forms.Label();
+            this.label255 = new System.Windows.Forms.Label();
+            this.labelHistogram = new System.Windows.Forms.Label();
+            this.groupBoxHistogramSourceImage = new System.Windows.Forms.GroupBox();
+            this.radioButton15 = new System.Windows.Forms.RadioButton();
+            this.radioButton14 = new System.Windows.Forms.RadioButton();
+            this.radioButton13 = new System.Windows.Forms.RadioButton();
+            this.radioButton16 = new System.Windows.Forms.RadioButton();
+            this.decodedImagePictureBox = new System.Windows.Forms.PictureBox();
+            this.loadDecoded = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.originalImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ErrorImagePictureBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kSelectorNumericUpDown)).BeginInit();
             this.ErrorImageGroupBox.SuspendLayout();
             this.saveModeGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.histogramPictureBox)).BeginInit();
+            this.groupBoxHistogramSourceImage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.decodedImagePictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // originalImagePictureBox
@@ -418,11 +436,174 @@
             this.radioButton10.Text = "Fixed (9 bits)";
             this.radioButton10.UseVisualStyleBackColor = true;
             // 
+            // histogramPictureBox
+            // 
+            this.histogramPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.histogramPictureBox.Location = new System.Drawing.Point(606, 305);
+            this.histogramPictureBox.Name = "histogramPictureBox";
+            this.histogramPictureBox.Size = new System.Drawing.Size(511, 330);
+            this.histogramPictureBox.TabIndex = 18;
+            this.histogramPictureBox.TabStop = false;
+            // 
+            // scaleTextBox
+            // 
+            this.scaleTextBox.Location = new System.Drawing.Point(525, 587);
+            this.scaleTextBox.Name = "scaleTextBox";
+            this.scaleTextBox.Size = new System.Drawing.Size(75, 20);
+            this.scaleTextBox.TabIndex = 19;
+            this.scaleTextBox.Text = "1";
+            this.scaleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // histogramRefreshButton
+            // 
+            this.histogramRefreshButton.Location = new System.Drawing.Point(525, 613);
+            this.histogramRefreshButton.Name = "histogramRefreshButton";
+            this.histogramRefreshButton.Size = new System.Drawing.Size(75, 23);
+            this.histogramRefreshButton.TabIndex = 20;
+            this.histogramRefreshButton.Text = "Refresh";
+            this.histogramRefreshButton.UseVisualStyleBackColor = true;
+            this.histogramRefreshButton.Click += new System.EventHandler(this.histogramRefreshButton_Click);
+            // 
+            // scaleLabel
+            // 
+            this.scaleLabel.AutoSize = true;
+            this.scaleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scaleLabel.Location = new System.Drawing.Point(522, 570);
+            this.scaleLabel.Name = "scaleLabel";
+            this.scaleLabel.Size = new System.Drawing.Size(43, 13);
+            this.scaleLabel.TabIndex = 21;
+            this.scaleLabel.Text = "Scale:";
+            // 
+            // labelMinus255
+            // 
+            this.labelMinus255.AutoSize = true;
+            this.labelMinus255.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelMinus255.Location = new System.Drawing.Point(603, 639);
+            this.labelMinus255.Name = "labelMinus255";
+            this.labelMinus255.Size = new System.Drawing.Size(32, 13);
+            this.labelMinus255.TabIndex = 22;
+            this.labelMinus255.Text = "-255";
+            // 
+            // label0
+            // 
+            this.label0.AutoSize = true;
+            this.label0.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label0.Location = new System.Drawing.Point(855, 639);
+            this.label0.Name = "label0";
+            this.label0.Size = new System.Drawing.Size(14, 13);
+            this.label0.TabIndex = 23;
+            this.label0.Text = "0";
+            // 
+            // label255
+            // 
+            this.label255.AutoSize = true;
+            this.label255.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label255.Location = new System.Drawing.Point(1089, 638);
+            this.label255.Name = "label255";
+            this.label255.Size = new System.Drawing.Size(28, 13);
+            this.label255.TabIndex = 24;
+            this.label255.Text = "255";
+            // 
+            // labelHistogram
+            // 
+            this.labelHistogram.AutoSize = true;
+            this.labelHistogram.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelHistogram.Location = new System.Drawing.Point(603, 283);
+            this.labelHistogram.Name = "labelHistogram";
+            this.labelHistogram.Size = new System.Drawing.Size(79, 16);
+            this.labelHistogram.TabIndex = 25;
+            this.labelHistogram.Text = "Histogram";
+            // 
+            // groupBoxHistogramSourceImage
+            // 
+            this.groupBoxHistogramSourceImage.Controls.Add(this.radioButton16);
+            this.groupBoxHistogramSourceImage.Controls.Add(this.radioButton15);
+            this.groupBoxHistogramSourceImage.Controls.Add(this.radioButton14);
+            this.groupBoxHistogramSourceImage.Controls.Add(this.radioButton13);
+            this.groupBoxHistogramSourceImage.Location = new System.Drawing.Point(400, 397);
+            this.groupBoxHistogramSourceImage.Name = "groupBoxHistogramSourceImage";
+            this.groupBoxHistogramSourceImage.Size = new System.Drawing.Size(200, 120);
+            this.groupBoxHistogramSourceImage.TabIndex = 26;
+            this.groupBoxHistogramSourceImage.TabStop = false;
+            this.groupBoxHistogramSourceImage.Text = "Source Image for Histogram";
+            // 
+            // radioButton15
+            // 
+            this.radioButton15.AutoSize = true;
+            this.radioButton15.Location = new System.Drawing.Point(6, 65);
+            this.radioButton15.Name = "radioButton15";
+            this.radioButton15.Size = new System.Drawing.Size(148, 17);
+            this.radioButton15.TabIndex = 20;
+            this.radioButton15.Text = "Quantized Prediction Error";
+            this.radioButton15.UseVisualStyleBackColor = true;
+            // 
+            // radioButton14
+            // 
+            this.radioButton14.AutoSize = true;
+            this.radioButton14.Location = new System.Drawing.Point(6, 42);
+            this.radioButton14.Name = "radioButton14";
+            this.radioButton14.Size = new System.Drawing.Size(97, 17);
+            this.radioButton14.TabIndex = 19;
+            this.radioButton14.Text = "Prediction Error";
+            this.radioButton14.UseVisualStyleBackColor = true;
+            // 
+            // radioButton13
+            // 
+            this.radioButton13.AutoSize = true;
+            this.radioButton13.Checked = true;
+            this.radioButton13.Location = new System.Drawing.Point(6, 19);
+            this.radioButton13.Name = "radioButton13";
+            this.radioButton13.Size = new System.Drawing.Size(60, 17);
+            this.radioButton13.TabIndex = 18;
+            this.radioButton13.TabStop = true;
+            this.radioButton13.Text = "Original";
+            this.radioButton13.UseVisualStyleBackColor = true;
+            // 
+            // radioButton16
+            // 
+            this.radioButton16.AutoSize = true;
+            this.radioButton16.Location = new System.Drawing.Point(6, 88);
+            this.radioButton16.Name = "radioButton16";
+            this.radioButton16.Size = new System.Drawing.Size(69, 17);
+            this.radioButton16.TabIndex = 21;
+            this.radioButton16.Text = "Decoded";
+            this.radioButton16.UseVisualStyleBackColor = true;
+            // 
+            // decodedImagePictureBox
+            // 
+            this.decodedImagePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.decodedImagePictureBox.Location = new System.Drawing.Point(606, 23);
+            this.decodedImagePictureBox.Name = "decodedImagePictureBox";
+            this.decodedImagePictureBox.Size = new System.Drawing.Size(256, 256);
+            this.decodedImagePictureBox.TabIndex = 27;
+            this.decodedImagePictureBox.TabStop = false;
+            // 
+            // loadDecoded
+            // 
+            this.loadDecoded.Location = new System.Drawing.Point(868, 23);
+            this.loadDecoded.Name = "loadDecoded";
+            this.loadDecoded.Size = new System.Drawing.Size(75, 23);
+            this.loadDecoded.TabIndex = 28;
+            this.loadDecoded.Text = "Load Decoded";
+            this.loadDecoded.UseVisualStyleBackColor = true;
+            this.loadDecoded.Click += new System.EventHandler(this.loadDecoded_Click);
+            // 
             // PredictiveCodingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 674);
+            this.ClientSize = new System.Drawing.Size(1155, 674);
+            this.Controls.Add(this.loadDecoded);
+            this.Controls.Add(this.decodedImagePictureBox);
+            this.Controls.Add(this.groupBoxHistogramSourceImage);
+            this.Controls.Add(this.labelHistogram);
+            this.Controls.Add(this.label255);
+            this.Controls.Add(this.label0);
+            this.Controls.Add(this.labelMinus255);
+            this.Controls.Add(this.scaleLabel);
+            this.Controls.Add(this.histogramRefreshButton);
+            this.Controls.Add(this.scaleTextBox);
+            this.Controls.Add(this.histogramPictureBox);
             this.Controls.Add(this.saveModeGroupBox);
             this.Controls.Add(this.contrastLabel);
             this.Controls.Add(this.contrastTextBox);
@@ -454,6 +635,10 @@
             this.ErrorImageGroupBox.PerformLayout();
             this.saveModeGroupBox.ResumeLayout(false);
             this.saveModeGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.histogramPictureBox)).EndInit();
+            this.groupBoxHistogramSourceImage.ResumeLayout(false);
+            this.groupBoxHistogramSourceImage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.decodedImagePictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -493,6 +678,21 @@
         private System.Windows.Forms.RadioButton radioButton12;
         private System.Windows.Forms.RadioButton radioButton11;
         private System.Windows.Forms.RadioButton radioButton10;
+        private System.Windows.Forms.PictureBox histogramPictureBox;
+        private System.Windows.Forms.TextBox scaleTextBox;
+        private System.Windows.Forms.Button histogramRefreshButton;
+        private System.Windows.Forms.Label scaleLabel;
+        private System.Windows.Forms.Label labelMinus255;
+        private System.Windows.Forms.Label label0;
+        private System.Windows.Forms.Label label255;
+        private System.Windows.Forms.Label labelHistogram;
+        private System.Windows.Forms.GroupBox groupBoxHistogramSourceImage;
+        private System.Windows.Forms.RadioButton radioButton15;
+        private System.Windows.Forms.RadioButton radioButton14;
+        private System.Windows.Forms.RadioButton radioButton13;
+        private System.Windows.Forms.RadioButton radioButton16;
+        private System.Windows.Forms.PictureBox decodedImagePictureBox;
+        private System.Windows.Forms.Button loadDecoded;
     }
 }
 

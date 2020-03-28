@@ -16,7 +16,12 @@ namespace predictive_coding
         string imagePath = null;
         const int PREDICTION_ERROR_IMAGE = 0;
         const int QUANTIZED_PREDICITON_ERROR_IMAGE = 1;
+        const int ORIGINAL = 0;
+        const int PREDICTION_ERROR = 1;
+        const int QUANTIZED_PREDICITON_ERROR = 2;
+        const int DECODED = 3;
         int selectedErrorImage = PREDICTION_ERROR_IMAGE;
+        int selectedHistogram = ORIGINAL;
         Coder coder;
         public PredictiveCodingForm()
         {
@@ -33,6 +38,11 @@ namespace predictive_coding
 
             PredictionErrorRadioButton.CheckedChanged += new EventHandler(SelectedErrorImageRadioButton_CheckedChanged);
             QuantizedPredictionErrorRadioButton.CheckedChanged += new EventHandler(SelectedErrorImageRadioButton_CheckedChanged);
+
+            radioButton13.CheckedChanged += new EventHandler(SelectedHistograRadioButton_CheckedChanged);
+            radioButton14.CheckedChanged += new EventHandler(SelectedHistograRadioButton_CheckedChanged);
+            radioButton15.CheckedChanged += new EventHandler(SelectedHistograRadioButton_CheckedChanged);
+            radioButton16.CheckedChanged += new EventHandler(SelectedHistograRadioButton_CheckedChanged);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -70,6 +80,26 @@ namespace predictive_coding
             if (QuantizedPredictionErrorRadioButton.Checked)
             {
                 selectedErrorImage = QUANTIZED_PREDICITON_ERROR_IMAGE;
+            }
+        }
+
+        private void SelectedHistograRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton13.Checked)
+            {
+                selectedHistogram = ORIGINAL;
+            }
+            if (radioButton14.Checked)
+            {
+                selectedHistogram = PREDICTION_ERROR;
+            }
+            if (radioButton15.Checked)
+            {
+                selectedHistogram = QUANTIZED_PREDICITON_ERROR;
+            }
+            if (radioButton16.Checked)
+            {
+                selectedHistogram = DECODED;
             }
         }
 
@@ -199,6 +229,107 @@ namespace predictive_coding
         private void CoderSaveButton_Click(object sender, EventArgs e)
         {
             coder.Save(imagePath);
+        }
+
+        private void histogramRefreshButton_Click(object sender, EventArgs e)
+        {
+            double scale;
+            if (!Double.TryParse(scaleTextBox.Text, out scale))
+            {
+                string message = "The scale value should be numeric!";
+                string title = "Error";
+                MessageBox.Show(message, title);
+                return;
+            }
+            if (scale < 0)
+            {
+                string message = "The scale value should be greater or equal to 0!";
+                string title = "Error";
+                MessageBox.Show(message, title);
+                return;
+            }
+            Bitmap bitmap = new Bitmap(512, histogramPictureBox.Height);
+            int[] histogram = null;
+
+            if (selectedHistogram == ORIGINAL)
+            {
+                int[,] original = TransformByteMatrixToIntMatrix(coder.original);
+                histogram = GetHistogram(original);
+            }
+            if (selectedHistogram == PREDICTION_ERROR)
+            {
+                histogram = GetHistogram(coder.predictionError);
+            }
+            if (selectedHistogram == QUANTIZED_PREDICITON_ERROR)
+            {
+                histogram = GetHistogram(coder.quantizedPredictionError);
+            }
+            if (selectedHistogram == DECODED)
+            {
+                int[,] decoded = TransformByteMatrixToIntMatrix(coder.decoded);
+                histogram = GetHistogram(decoded);
+            }
+            DrawHistogram(histogram, bitmap, scale);
+            histogramPictureBox.Image = bitmap;
+
+        }
+
+        private void DrawHistogram(int[] histogram, Bitmap bitmap, double scale)
+        {
+            int height = bitmap.Height;
+            for(int i = 0; i < 512; i++)
+            {
+                int barLength = histogram[i];
+                barLength = (int)(barLength * scale);
+                barLength = barLength < bitmap.Height ? barLength : bitmap.Height;
+                for(int j = bitmap.Height - 1; j > bitmap.Height - 1 - barLength; j--)
+                {
+                    bitmap.SetPixel(i, j, Color.FromArgb(255, 0, 0));
+                }
+            }
+        }
+
+        private int[] GetHistogram(int[,] matrix)
+        {
+            int[] result = new int[512];
+            for (int i = 0; i < 512; i++)
+            {
+                result[i] = 0;
+            }
+            for (int i = 0; i < 256; i++)
+            {
+                for(int j = 0; j < 256; j++)
+                {
+                    result[matrix[i, j] + 255]++;
+                }
+            }
+            return result;
+        }
+
+        int[,] TransformByteMatrixToIntMatrix(byte[,] input)
+        {
+            int[,] result = new int[256, 256];
+            for(int i = 0; i < 256; i++)
+            {
+                for(int j = 0; j < 256; j++)
+                {
+                    result[i, j] = input[i, j];
+                }
+            }
+            return result;
+        }
+
+        private void loadDecoded_Click(object sender, EventArgs e)
+        {
+            Bitmap bitmap = new Bitmap(256, 256);
+            for (int i = 0; i < 256; i++)
+            {
+                for(int j = 0; j < 256; j++)
+                {
+                    bitmap.SetPixel(j, i, Color.FromArgb(coder.decoded[i, j], coder.decoded[i, j], coder.decoded[i, j]));
+                }
+            }
+            decodedImagePictureBox.Image = bitmap;
         }
     }
 }

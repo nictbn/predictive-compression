@@ -140,23 +140,23 @@ namespace predictive_coding
                     break;
                 case 4:
                     value = GetA(i, j) + GetB(i, j) - GetC(i, j);
-                    prediction[i, j] = normalize(value);
+                    prediction[i, j] = Normalize(value);
                     break;
                 case 5:
                     value = GetA(i, j) + (GetB(i, j) - GetC(i, j)) / 2;
-                    prediction[i, j] = normalize(value);
+                    prediction[i, j] = Normalize(value);
                     break;
                 case 6:
                     value = GetB(i, j) + (GetA(i, j) - GetC(i, j)) / 2;
-                    prediction[i, j] = normalize(value);
+                    prediction[i, j] = Normalize(value);
                     break;
                 case A_B_AVERAGE:
                     value = (GetA(i, j) + GetB(i, j)) / 2;
-                    prediction[i, j] = normalize(value);
+                    prediction[i, j] = Normalize(value);
                     break;
                 case PREDICTOR_JPEGLS:
                     value = jpegls(i, j);
-                    prediction[i, j] = normalize(value);
+                    prediction[i, j] = Normalize(value);
                     break;
             }
         }
@@ -177,7 +177,7 @@ namespace predictive_coding
             }
         }
 
-        private byte normalize(int value)
+        private byte Normalize(int value)
         {
             if (value > 255)
             {
@@ -223,7 +223,7 @@ namespace predictive_coding
         private void DecodePixel(int i, int j)
         {
             int value = dequantizedPredictionError[i, j] + prediction[i, j];
-            decoded[i, j] = normalize(value);
+            decoded[i, j] = Normalize(value);
         }
 
         private void CalculateError(int i, int j)
@@ -233,8 +233,6 @@ namespace predictive_coding
 
         public int GetMinimumError()
         {
-            int x = -1;
-            int y = -1;
             int min = int.MaxValue;
             for (int i = 0; i < HEIGHT; i++)
             {
@@ -243,8 +241,6 @@ namespace predictive_coding
                     if (error[i, j] < min)
                     {
                         min = error[i, j];
-                        x = i;
-                        y = j;
                     }
                 }
             }

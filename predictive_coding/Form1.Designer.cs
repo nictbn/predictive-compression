@@ -74,7 +74,9 @@
             this.radioButton13 = new System.Windows.Forms.RadioButton();
             this.radioButton16 = new System.Windows.Forms.RadioButton();
             this.decodedImagePictureBox = new System.Windows.Forms.PictureBox();
-            this.loadDecoded = new System.Windows.Forms.Button();
+            this.decoderLoadButton = new System.Windows.Forms.Button();
+            this.decodeButton = new System.Windows.Forms.Button();
+            this.decoderSaveButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.originalImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ErrorImagePictureBox)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -578,22 +580,44 @@
             this.decodedImagePictureBox.TabIndex = 27;
             this.decodedImagePictureBox.TabStop = false;
             // 
-            // loadDecoded
+            // decoderLoadButton
             // 
-            this.loadDecoded.Location = new System.Drawing.Point(868, 23);
-            this.loadDecoded.Name = "loadDecoded";
-            this.loadDecoded.Size = new System.Drawing.Size(75, 23);
-            this.loadDecoded.TabIndex = 28;
-            this.loadDecoded.Text = "Load Decoded";
-            this.loadDecoded.UseVisualStyleBackColor = true;
-            this.loadDecoded.Click += new System.EventHandler(this.loadDecoded_Click);
+            this.decoderLoadButton.Location = new System.Drawing.Point(868, 23);
+            this.decoderLoadButton.Name = "decoderLoadButton";
+            this.decoderLoadButton.Size = new System.Drawing.Size(75, 23);
+            this.decoderLoadButton.TabIndex = 28;
+            this.decoderLoadButton.Text = "Load";
+            this.decoderLoadButton.UseVisualStyleBackColor = true;
+            this.decoderLoadButton.Click += new System.EventHandler(this.loadDecoded_Click);
+            // 
+            // decodeButton
+            // 
+            this.decodeButton.Location = new System.Drawing.Point(868, 52);
+            this.decodeButton.Name = "decodeButton";
+            this.decodeButton.Size = new System.Drawing.Size(75, 23);
+            this.decodeButton.TabIndex = 29;
+            this.decodeButton.Text = "Decode";
+            this.decodeButton.UseVisualStyleBackColor = true;
+            this.decodeButton.Click += new System.EventHandler(this.decodeButton_Click);
+            // 
+            // decoderSaveButton
+            // 
+            this.decoderSaveButton.Location = new System.Drawing.Point(868, 81);
+            this.decoderSaveButton.Name = "decoderSaveButton";
+            this.decoderSaveButton.Size = new System.Drawing.Size(75, 23);
+            this.decoderSaveButton.TabIndex = 30;
+            this.decoderSaveButton.Text = "Save";
+            this.decoderSaveButton.UseVisualStyleBackColor = true;
+            this.decoderSaveButton.Click += new System.EventHandler(this.decoderSaveButton_Click);
             // 
             // PredictiveCodingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1155, 674);
-            this.Controls.Add(this.loadDecoded);
+            this.Controls.Add(this.decoderSaveButton);
+            this.Controls.Add(this.decodeButton);
+            this.Controls.Add(this.decoderLoadButton);
             this.Controls.Add(this.decodedImagePictureBox);
             this.Controls.Add(this.groupBoxHistogramSourceImage);
             this.Controls.Add(this.labelHistogram);
@@ -692,7 +716,9 @@
         private System.Windows.Forms.RadioButton radioButton13;
         private System.Windows.Forms.RadioButton radioButton16;
         private System.Windows.Forms.PictureBox decodedImagePictureBox;
-        private System.Windows.Forms.Button loadDecoded;
+        private System.Windows.Forms.Button decoderLoadButton;
+        private System.Windows.Forms.Button decodeButton;
+        private System.Windows.Forms.Button decoderSaveButton;
     }
 }
 

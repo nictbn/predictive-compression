@@ -23,6 +23,7 @@ namespace predictive_coding
         int selectedErrorImage = PREDICTION_ERROR_IMAGE;
         int selectedHistogram = ORIGINAL;
         Coder coder;
+        Decoder decoder;
         public PredictiveCodingForm()
         {
             InitializeComponent();
@@ -49,6 +50,8 @@ namespace predictive_coding
         {
             coder = new Coder();
             coder.Init();
+            decoder = new Decoder();
+            decoder.Init();
         }
 
         private void CoderLoadButton_Click(object sender, EventArgs e)
@@ -321,15 +324,49 @@ namespace predictive_coding
 
         private void loadDecoded_Click(object sender, EventArgs e)
         {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\School";
+                openFileDialog.Filter = "Near Lossless Prediction (*.nlp)|*.nlp";
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    decoder.codedImagePath = openFileDialog.FileName;
+                }
+            }
+        }
+
+        private void decodeButton_Click(object sender, EventArgs e)
+        {
+            decoder.Decode();
+
+            for(int i = 0; i < 256; i++)
+            {
+                for (int j = 0; j < 256; j++)
+                {
+                    if (coder.decoded[i, j] != decoder.decoded[i, j])
+                    {
+                        return;
+                    }
+                }
+            }
+
             Bitmap bitmap = new Bitmap(256, 256);
             for (int i = 0; i < 256; i++)
             {
-                for(int j = 0; j < 256; j++)
+                for (int j = 0; j < 256; j++)
                 {
-                    bitmap.SetPixel(j, i, Color.FromArgb(coder.decoded[i, j], coder.decoded[i, j], coder.decoded[i, j]));
+                    int color = decoder.decoded[i, j];
+                    bitmap.SetPixel(j, i, Color.FromArgb(color, color, color));
                 }
             }
             decodedImagePictureBox.Image = bitmap;
+        }
+
+        private void decoderSaveButton_Click(object sender, EventArgs e)
+        {
+            decoder.Save();
         }
     }
 }

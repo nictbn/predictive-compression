@@ -90,14 +90,14 @@ namespace predictive_coding
         {
             if(usedComponent == USED_CODER)
             {
-                radioButton14.Text = "Coder Prediction Error";
-                radioButton15.Text = "Coder Dequantized Prediction Error";
+                radioButton14.Text = "Coder Dequantized Prediction Error";
+                radioButton15.Text = "Coder Quantized Prediction Error";
                 radioButton16.Text = "Coder Decoded Image";
             }
             if(usedComponent == USED_DECODER)
             {
-                radioButton14.Text = "Decoder Prediction Error";
-                radioButton15.Text = "Decoder Dequantized Prediction Error";
+                radioButton14.Text = "Decoder Dequantized Prediction Error";
+                radioButton15.Text = "Decoder Quantized Prediction Error";
                 radioButton16.Text = "Decoder Decoded Image";
             }
         }

@@ -94,6 +94,11 @@ namespace predictive_coding
 
         private void MakePrediction(int i, int j)
         {
+            if (predictor == PREDICTOR_128)
+            {
+                prediction[i, j] = MIDDLE_OF_INTERVAL;
+                return;
+            }
             if (i == FIRST_ROW && j == FIRST_COLUMN)
             {
                 prediction[i, j] = MIDDLE_OF_INTERVAL;
@@ -101,34 +106,17 @@ namespace predictive_coding
             }
             if (i == FIRST_ROW)
             {
-                if (predictor == PREDICTOR_128)
-                {
-                    prediction[i, j] = MIDDLE_OF_INTERVAL;
-                }
-                else
-                {
-                    prediction[i, j] = GetA(i,j);
-                }
+                prediction[i, j] = GetA(i, j);
                 return;
             }
             if (j == FIRST_COLUMN)
             {
-                if (predictor == PREDICTOR_128)
-                {
-                    prediction[i, j] = MIDDLE_OF_INTERVAL;
-                }
-                else
-                {
-                    prediction[i, j] = GetB(i, j);
-                }
+                prediction[i, j] = GetB(i, j);
                 return;
             }
             int value;
-            switch(predictor)
+            switch (predictor)
             {
-                case PREDICTOR_128:
-                    prediction[i, j] = MIDDLE_OF_INTERVAL;
-                    break;
                 case PREDICTOR_A:
                     prediction[i, j] = GetA(i, j);
                     break;
@@ -212,7 +200,7 @@ namespace predictive_coding
 
         private void QuantizePredictionError(int i, int j)
         {
-            quantizedPredictionError[i, j] = (int)Math.Floor(1.0 *(predictionError[i, j] + k) / (2 * k + 1));
+            quantizedPredictionError[i, j] = (int)Math.Floor(1.0 * (predictionError[i, j] + k) / (2 * k + 1));
         }
 
         private void DequantizePredictionError(int i, int j)
@@ -263,7 +251,7 @@ namespace predictive_coding
                     writer.writeNBits(header[i], 8);
                 }
 
-                for(int i = 0; i < HEIGHT; i++)
+                for (int i = 0; i < HEIGHT; i++)
                 {
                     for (int j = 0; j < WIDTH; j++)
                     {

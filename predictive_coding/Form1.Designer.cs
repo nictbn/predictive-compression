@@ -69,10 +69,10 @@
             this.label255 = new System.Windows.Forms.Label();
             this.labelHistogram = new System.Windows.Forms.Label();
             this.groupBoxHistogramSourceImage = new System.Windows.Forms.GroupBox();
+            this.radioButton16 = new System.Windows.Forms.RadioButton();
             this.radioButton15 = new System.Windows.Forms.RadioButton();
             this.radioButton14 = new System.Windows.Forms.RadioButton();
             this.radioButton13 = new System.Windows.Forms.RadioButton();
-            this.radioButton16 = new System.Windows.Forms.RadioButton();
             this.decodedImagePictureBox = new System.Windows.Forms.PictureBox();
             this.decoderLoadButton = new System.Windows.Forms.Button();
             this.decodeButton = new System.Windows.Forms.Button();
@@ -453,7 +453,7 @@
             this.scaleTextBox.Name = "scaleTextBox";
             this.scaleTextBox.Size = new System.Drawing.Size(75, 20);
             this.scaleTextBox.TabIndex = 19;
-            this.scaleTextBox.Text = "1";
+            this.scaleTextBox.Text = "0.3";
             this.scaleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // histogramRefreshButton
@@ -529,6 +529,16 @@
             this.groupBoxHistogramSourceImage.TabStop = false;
             this.groupBoxHistogramSourceImage.Text = "Source Image for Histogram";
             // 
+            // radioButton16
+            // 
+            this.radioButton16.AutoSize = true;
+            this.radioButton16.Location = new System.Drawing.Point(6, 88);
+            this.radioButton16.Name = "radioButton16";
+            this.radioButton16.Size = new System.Drawing.Size(69, 17);
+            this.radioButton16.TabIndex = 21;
+            this.radioButton16.Text = "Decoded";
+            this.radioButton16.UseVisualStyleBackColor = true;
+            // 
             // radioButton15
             // 
             this.radioButton15.AutoSize = true;
@@ -560,16 +570,6 @@
             this.radioButton13.TabStop = true;
             this.radioButton13.Text = "Original";
             this.radioButton13.UseVisualStyleBackColor = true;
-            // 
-            // radioButton16
-            // 
-            this.radioButton16.AutoSize = true;
-            this.radioButton16.Location = new System.Drawing.Point(6, 88);
-            this.radioButton16.Name = "radioButton16";
-            this.radioButton16.Size = new System.Drawing.Size(69, 17);
-            this.radioButton16.TabIndex = 21;
-            this.radioButton16.Text = "Decoded";
-            this.radioButton16.UseVisualStyleBackColor = true;
             // 
             // decodedImagePictureBox
             // 

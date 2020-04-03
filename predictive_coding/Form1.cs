@@ -13,6 +13,8 @@ namespace predictive_coding
 {
     public partial class PredictiveCodingForm : Form
     {
+        const int HEIGHT = 256;
+        const int WIDTH = 256;
         string imagePath = null;
         const int PREDICTION_ERROR_IMAGE = 0;
         const int QUANTIZED_PREDICITON_ERROR_IMAGE = 1;
@@ -28,6 +30,8 @@ namespace predictive_coding
         int selectedHistogram = ORIGINAL;
         Coder coder;
         Decoder decoder;
+
+
         public PredictiveCodingForm()
         {
             InitializeComponent();
@@ -254,10 +258,42 @@ namespace predictive_coding
 
         private void ComputeErrorButton_Click(object sender, EventArgs e)
         {
-            MinErrorLabel.Text = "Min Error: " + coder.GetMinimumError();
-            MaxErrorLabel.Text = "Max Error: " + coder.GetMaximumError();
+            MinErrorLabel.Text = "Min Error: " + GetMinimumError();
+            MaxErrorLabel.Text = "Max Error: " + GetMaximumError();
+        }
+        int GetMinimumError()
+        {
+            int min = int.MaxValue;
+            for (int i = 0; i < HEIGHT; i++)
+            {
+                for (int j = 0; j < WIDTH; j++)
+                {
+                    int difference = coder.original[i, j] - decoder.decoded[i, j];
+                    if (difference < min)
+                    {
+                        min = difference;
+                    }
+                }
+            }
+            return min;
         }
 
+        int GetMaximumError()
+        {
+            int max = int.MinValue;
+            for (int i = 0; i < HEIGHT; i++)
+            {
+                for (int j = 0; j < WIDTH; j++)
+                {
+                    int difference = coder.original[i, j] - decoder.decoded[i, j];
+                    if (difference > max)
+                    {
+                        max = difference;
+                    }
+                }
+            }
+            return max;
+        }
         private void CoderSaveButton_Click(object sender, EventArgs e)
         {
             SetUsedCompnent(USED_CODER);

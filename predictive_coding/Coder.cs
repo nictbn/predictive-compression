@@ -82,7 +82,6 @@ namespace predictive_coding
                     QuantizePredictionError(i, j);
                     DequantizePredictionError(i, j);
                     DecodePixel(i, j);
-                    CalculateError(i, j);
                 }
             }
         }
@@ -214,27 +213,6 @@ namespace predictive_coding
             decoded[i, j] = Normalize(value);
         }
 
-        private void CalculateError(int i, int j)
-        {
-            error[i, j] = original[i, j] - decoded[i, j];
-        }
-
-        public int GetMinimumError()
-        {
-            int min = int.MaxValue;
-            for (int i = 0; i < HEIGHT; i++)
-            {
-                for (int j = 0; j < WIDTH; j++)
-                {
-                    if (error[i, j] < min)
-                    {
-                        min = error[i, j];
-                    }
-                }
-            }
-            return min;
-        }
-
         public void Save(string imagePath)
         {
             if (imagePath != null)
@@ -261,22 +239,6 @@ namespace predictive_coding
                 writer.writeNBits(0, 7);
                 writer.closeFile();
             }
-        }
-
-        public int GetMaximumError()
-        {
-            int max = int.MinValue;
-            for (int i = 0; i < HEIGHT; i++)
-            {
-                for (int j = 0; j < WIDTH; j++)
-                {
-                    if (error[i, j] > max)
-                    {
-                        max = error[i, j];
-                    }
-                }
-            }
-            return max;
         }
     }
 }

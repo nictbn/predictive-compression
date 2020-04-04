@@ -77,6 +77,7 @@
             this.decoderLoadButton = new System.Windows.Forms.Button();
             this.decodeButton = new System.Windows.Forms.Button();
             this.decoderSaveButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.originalImagePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ErrorImagePictureBox)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -610,11 +611,22 @@
             this.decoderSaveButton.UseVisualStyleBackColor = true;
             this.decoderSaveButton.Click += new System.EventHandler(this.decoderSaveButton_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(868, 188);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 31;
+            this.button1.Text = "Compare";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // PredictiveCodingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1155, 674);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.decoderSaveButton);
             this.Controls.Add(this.decodeButton);
             this.Controls.Add(this.decoderLoadButton);
@@ -719,6 +731,7 @@
         private System.Windows.Forms.Button decoderLoadButton;
         private System.Windows.Forms.Button decodeButton;
         private System.Windows.Forms.Button decoderSaveButton;
+        private System.Windows.Forms.Button button1;
     }
 }
 

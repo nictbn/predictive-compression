@@ -25,7 +25,8 @@ namespace predictive_coding
         const int HEADER_SIZE = 1078;
         const int WIDTH = 256;
         const int HEIGHT = 256;
-
+        const string FIXED = "F";
+        const string TABLE = "T";
         const int FIRST_ROW = 0;
         const int FIRST_COLUMN = 0;
 
@@ -228,17 +229,67 @@ namespace predictive_coding
                 {
                     writer.writeNBits(header[i], 8);
                 }
-
-                for (int i = 0; i < HEIGHT; i++)
+                if (saveMode.Equals(FIXED))
                 {
-                    for (int j = 0; j < WIDTH; j++)
+                    SaveFixed(writer);
+                }
+                else if (saveMode.Equals(TABLE))
+                {
+                    SaveUsingTable(writer);
+                }
+               
+            }
+        }
+
+
+        void SaveFixed(BitWriter writer)
+        {
+            for (int i = 0; i < HEIGHT; i++)
+            {
+                for (int j = 0; j < WIDTH; j++)
+                {
+                    writer.writeNBits(quantizedPredictionError[i, j], 9);
+                }
+            }
+            writer.writeNBits(0, 7);
+            writer.closeFile();
+        }
+
+        private void SaveUsingTable(BitWriter writer)
+        {
+            for (int i = 0; i < HEIGHT; i++)
+            {
+                for (int j = 0; j < WIDTH; j++)
+                {
+                    int currentValue = quantizedPredictionError[i, j];
+                    if (currentValue == 0)
                     {
-                        writer.writeNBits(quantizedPredictionError[i, j], 9);
+                        writer.writeBit(0);
+                        continue;
+                    }
+                    int absoluteValue = Math.Abs(quantizedPredictionError[i, j]);
+                    int numberOfOneBits = (int)Math.Log(absoluteValue, 2) + 1;
+
+                    for (int k = 0; k < numberOfOneBits; k++)
+                    {
+                        writer.writeBit(1);
+                    }
+
+                    writer.writeBit(0);
+
+                    if (currentValue > 0)
+                    {
+                        writer.writeNBits(currentValue, numberOfOneBits);
+                    }
+                    else
+                    {
+                        int index = (int)Math.Pow(2, numberOfOneBits) - 1 - absoluteValue;
+                        writer.writeNBits(index, numberOfOneBits);
                     }
                 }
-                writer.writeNBits(0, 7);
-                writer.closeFile();
             }
+            writer.writeNBits(0, 7);
+            writer.closeFile();
         }
     }
 }

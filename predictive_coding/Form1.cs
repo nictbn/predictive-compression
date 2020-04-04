@@ -52,6 +52,10 @@ namespace predictive_coding
             radioButton14.CheckedChanged += new EventHandler(SelectedHistograRadioButton_CheckedChanged);
             radioButton15.CheckedChanged += new EventHandler(SelectedHistograRadioButton_CheckedChanged);
             radioButton16.CheckedChanged += new EventHandler(SelectedHistograRadioButton_CheckedChanged);
+
+            radioButton10.CheckedChanged += new EventHandler(SaveModeRadioButton_CheckedChanged);
+            radioButton11.CheckedChanged += new EventHandler(SaveModeRadioButton_CheckedChanged);
+            radioButton12.CheckedChanged += new EventHandler(SaveModeRadioButton_CheckedChanged);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -186,7 +190,7 @@ namespace predictive_coding
             }
             else if (radioButton11.Checked)
             {
-                coder.saveMode = "F";   // THIS MUST BE CHANGED
+                coder.saveMode = "T";
             }
             else if (radioButton12.Checked)
             {
@@ -445,6 +449,22 @@ namespace predictive_coding
         {
             SetUsedCompnent(USED_DECODER);
             decoder.Save();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            for(int i = 0; i < 256; i++)
+            {
+                for(int j = 0; j < 256; j++)
+                {
+                    if (coder.quantizedPredictionError[i, j] != decoder.quantizedPredictionError[i, j])
+                    {
+                        int a = coder.quantizedPredictionError[i, j];
+                        int b = decoder.quantizedPredictionError[i, j];
+                        int c = 5;
+                    }
+                }
+            }
         }
     }
 }

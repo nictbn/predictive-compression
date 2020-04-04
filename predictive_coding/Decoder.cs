@@ -9,6 +9,8 @@ namespace predictive_coding
 {
     public class Decoder
     {
+        const string FIXED = "F";
+        const string TABLE = "T";
         const int PREDICTOR_128 = 0;
         const int MIDDLE_OF_INTERVAL = 128;
         const int PREDICTOR_A = 1;
@@ -64,13 +66,14 @@ namespace predictive_coding
                 header[i] = (byte)reader.readNBits(8);
             }
 
-            if (saveMode.Equals("F"))
+            if (saveMode.Equals(FIXED))
             {
                 PopulateQuantizedPredictionErrorFromSaveModeFixed();
             }
-            
-            reader.closeFile();
-
+            else if (saveMode.Equals(TABLE))
+            {
+                PopulateQuantizedPredictionErrorFromSaveModeTable();
+            }
             DequantizePredictionError();
 
             for(int i = 0; i < HEIGHT; i++)
@@ -211,6 +214,40 @@ namespace predictive_coding
                     quantizedPredictionError[i, j] = ExtendSign(currentValue);
                 }
             }
+            reader.closeFile();
+        }
+
+        private void PopulateQuantizedPredictionErrorFromSaveModeTable()
+        {
+            for (int i = 0; i < HEIGHT; i++)
+            {
+                for (int j = 0; j < WIDTH; j++)
+                {
+                    int numberOfOnes = 0;
+                    while(reader.readBit() != 0)
+                    {
+                        numberOfOnes++;
+                    }
+
+                    if (numberOfOnes == 0)
+                    {
+                        quantizedPredictionError[i, j] = 0;
+                        continue;
+                    }
+
+                    int index = reader.readNBits(numberOfOnes);
+                    if (index >= (int)Math.Pow(2, numberOfOnes - 1))
+                    {
+                        quantizedPredictionError[i, j] = index;
+                    }
+                    else
+                    {
+                        int value = -((int)Math.Pow(2, numberOfOnes) - 1 - index);
+                        quantizedPredictionError[i, j] = value;
+                    }
+                }
+            }
+            reader.closeFile();
         }
 
         private int ExtendSign(int value)

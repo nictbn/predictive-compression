@@ -1,4 +1,5 @@
-﻿using BitReaderWriter;
+﻿using AritmeticV2;
+using BitReaderWriter;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,6 +28,7 @@ namespace predictive_coding
         const int HEIGHT = 256;
         const string FIXED = "F";
         const string TABLE = "T";
+        const string ARITHMETIC = "A";
         const int FIRST_ROW = 0;
         const int FIRST_COLUMN = 0;
 
@@ -237,10 +239,19 @@ namespace predictive_coding
                 {
                     SaveUsingTable(writer);
                 }
+                else if (saveMode.Equals(ARITHMETIC))
+                {
+                    SaveUsingArithmetic(writer);
+                }
                
             }
         }
 
+        private void SaveUsingArithmetic(BitWriter writer)
+        {
+            ArithCoder arithCoder = new ArithCoder();
+            arithCoder.Encode(512, quantizedPredictionError, writer);
+        }
 
         void SaveFixed(BitWriter writer)
         {

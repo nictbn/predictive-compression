@@ -1,4 +1,5 @@
-﻿using BitReaderWriter;
+﻿using AritmeticV2;
+using BitReaderWriter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace predictive_coding
     {
         const string FIXED = "F";
         const string TABLE = "T";
+        const string ARITHMETIC = "A";
         const int PREDICTOR_128 = 0;
         const int MIDDLE_OF_INTERVAL = 128;
         const int PREDICTOR_A = 1;
@@ -74,6 +76,10 @@ namespace predictive_coding
             {
                 PopulateQuantizedPredictionErrorFromSaveModeTable();
             }
+            else if (saveMode.Equals(ARITHMETIC))
+            {
+                PopulateQuantizedPredictionErrorFromSaveModeArithmetic();
+            }
             DequantizePredictionError();
 
             for(int i = 0; i < HEIGHT; i++)
@@ -85,6 +91,8 @@ namespace predictive_coding
                 }
             }
         }
+
+        
 
         private void SetPixelInDecodedMatrix(int i, int j)
         {
@@ -248,6 +256,12 @@ namespace predictive_coding
                 }
             }
             reader.closeFile();
+        }
+
+        private void PopulateQuantizedPredictionErrorFromSaveModeArithmetic()
+        {
+            ArithDecoder arithDecoder = new ArithDecoder();
+            quantizedPredictionError = arithDecoder.Decode(reader, 512);
         }
 
         private int ExtendSign(int value)
